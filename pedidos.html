@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Pedidos</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<meta charset="utf-8">
+        <link rel="stylesheet" href="js/jquery.mobile.theme-1.4.3.css" />
+        <link rel="stylesheet" href="js/jquery.mobile.structure-1.4.3.css" />
+        <link rel="stylesheet" href="js/jquery.mobile.icons.min.css" />
+        <link rel="stylesheet" href="css/ui-darkness/jquery-ui-1.10.4.custom.css" />
+
+        <script src="js/jquery-1.10.2.js"></script>
+        <script src="js/jquery.mobile-1.4.3.min.js"></script>
+        <script src="js/jquery-ui-1.10.4.custom.js"></script>
+		<script language="JavaScript">
+		//$(function() {
+		//$( document ).delegate("#pedidos", "pageinit",function() {
+		$( document ).on( "pagebeforeshow","#pedidos", function() {
+			getEmpresas();
+			//$("#pedidos").refresh();
+			/*$(".mySelect").bind( "change", function(event, ui) {
+ 				getCategorias();*/
+			//})
+		});
+
+		function getEmpresas(){
+		html = "";
+		//var formData = $("#ajaxForm").serialize();
+		var formData = { "option":"empresa","idEmpresa":"0"};
+				$.ajax({
+					type : "GET",
+					url : "controllers/producto.php",
+					data: formData,
+					contentType : "application/json; charset=utf-8",
+					dataType : "json",
+					success : function(msg) {
+		   			   $.each(msg, function(index, item) {
+                    		html += "<li><a href=# onClick = 'javascript:getCategorias("+item.index +",\""+item.value+"\")'>" + item.value + "</a></li>";
+                		});
+                	  $ul = $("#ddlEmpresa2");
+                	  $ul.html("");
+                	  $ul.html( html );
+                	  $ul.listview( "refresh" );
+                      $ul.trigger( "updatelayout");
+					},
+					error : function() {
+						//$("#ddlEmpresa2").get(0).options.length = 0;
+						alert("Error al cargar Empresas");
+					}
+				});
+		}
+		function getCategorias(idEmpresa, nombreEmpresa){
+		var formData = { "option":"categoria","idEmpresa":idEmpresa};
+
+		$("#ddlEmpresaHeader").collapsible({collapsed:true});
+		$("#ddlEmpresaHeader .ui-btn-b").text(nombreEmpresa);
+		$('#ddlEmpresaHeader').collapsible({refresh: true});
+		$("#ddlCategoriaHeader").collapsible({collapsed:false});
+		$("#ddlCategoriaHeader .ui-btn-b").text("Elija una categoria...");
+		$("#ddlLineaHeader .ui-btn-b").text("Elija una linea...");
+		$("#ddlMarcaHeader .ui-btn-b").text("Elija una marca...");
+		html = "";
+				$.ajax({
+					type : "GET",
+					url : "controllers/producto.php",
+					data : formData,
+					contentType : "application/json; charset=utf-8",
+					dataType : "json",
+					success : function(msg) {
+		   			   $.each(msg, function(index, item) {
+                    		html += "<li><a href=# onClick = 'javascript:getLineas("+item.index +",\""+item.value+"\")'>" + item.value + "</a></li>";
+                		});
+                	  $ul = $("#ddlCategoria");
+                	  $ul.html("");
+                	  $ul.html( html );
+                	  $ul.listview( "refresh" );
+                      $ul.trigger( "updatelayout");
+					},
+					error : function() {
+						alert("Error al cargar Categoria");
+					}
+				});
+		}
+
+		function getLineas(idCategoria, nombreCategoria){
+		var formData = { "option":"linea","idCategoria":idCategoria};
+
+		$("#ddlCategoriaHeader").collapsible({collapsed:true});
+		$("#ddlCategoriaHeader .ui-btn-b").text(nombreCategoria);
+		$('#ddlCategoriaHeader').collapsible({refresh: true});
+		$("#ddlLineaHeader").collapsible({collapsed:false});
+		html = "";
+				$.ajax({
+					type : "GET",
+					url : "controllers/producto.php",
+					data : formData,
+					contentType : "application/json; charset=utf-8",
+					dataType : "json",
+					success : function(msg) {
+		   			   $.each(msg, function(index, item) {
+                    		html += "<li><a href=# onClick = 'javascript:getMarcas("+item.index +",\""+item.value+"\")'>" + item.value + "</a></li>";
+                		});
+                	  $ul = $("#ddlLinea");
+                	  $ul.html("");
+                	  $ul.html( html );
+                	  $ul.listview( "refresh" );
+                      $ul.trigger( "updatelayout");
+					},
+					error : function() {
+						alert("Error al cargar Categoria");
+					}
+				});
+		}
+	function getMarcas(idLinea, nombreLinea){
+		var formData = { "option":"marca","idLinea":idLinea};
+
+		$("#ddlLineaHeader").collapsible({collapsed:true});
+		$("#ddlLineaHeader .ui-btn-b").text(nombreLinea);
+		$('#ddlLineaHeader').collapsible({refresh: true});
+		$("#ddlMarcaHeader").collapsible({collapsed:false});
+		html = "";
+				$.ajax({
+					type : "GET",
+					url : "controllers/producto.php",
+					data : formData,
+					contentType : "application/json; charset=utf-8",
+					dataType : "json",
+					success : function(msg) {
+		   			   $.each(msg, function(index, item) {
+                    		html += "<li><a href=# onClick = 'javascript:setMarcas("+item.index +",\""+item.value+"\")'>" + item.value + "</a></li>";
+                		});
+                	  $ul = $("#ddlMarca");
+                	  $ul.html("");
+                	  $ul.html( html );
+                	  $ul.listview( "refresh" );
+                      $ul.trigger( "updatelayout");
+					},
+					error : function() {
+						alert("Error al cargar Categoria");
+					}
+				});
+		}
+		function setMarcas(idMarca,nombreMarca){
+	    $("#ddlMarcaHeader").collapsible({collapsed:true});
+		$("#ddlMarcaHeader .ui-btn-b").text(nombreMarca);
+		$('#ddlMarcaHeader').collapsible({refresh: true});
+		}
+		</script>
+	</head>
+	<body>
+
+		<div data-role="page" id="pedidos">
+
+			<div data-role="header">
+				<h1>Pedidos</h1>
+			</div><!-- /header -->
+
+			<div role="main" class="ui-content">
+				<form id="ajaxForm">
+				<div id="set" data-role="collapsible-set">
+					<div data-role="collapsible" data-theme="b" data-content-theme="b" id="ddlEmpresaHeader" data-collapsed="false">
+						<h2 id="section_title">Elija una empresa...</h2>
+						<ul data-role="listview" data-filter="true" id="ddlEmpresa2"></ul>
+						<input type="hidden" id="option" name="option" value="empresa">
+					</div>
+					<div data-role="collapsible" data-theme="b" data-content-theme="b" id="ddlCategoriaHeader">
+						<h2>Elija una Categoria...</h2>
+						<ul data-role="listview" data-filter="true" id="ddlCategoria"></ul>
+					</div>
+					<div data-role="collapsible" data-theme="b" data-content-theme="b" id="ddlLineaHeader">
+						<h2>Elija una Linea...</h2>
+						<ul data-role="listview" data-filter="true" id="ddlLinea"></ul>
+					</div>
+					<div data-role="collapsible" data-theme="b" data-content-theme="b" id="ddlMarcaHeader">
+						<h2>Elija una Marca...</h2>
+						<ul data-role="listview" data-filter="true" id="ddlMarca"></ul>
+					</div>
+				</div>
+				</form>
+
+			</div><!-- /content -->
+
+			<div data-role="footer">
+				<h4>LinkSim</h4>
+			</div><!-- /footer -->
+		</div><!-- /page -->
+
+	</body>
+</html>

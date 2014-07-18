@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Pedidos</title>
+    <head>
+        <title>Pedidos</title>
 
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<meta charset="utf-8">
+        <meta charset="utf-8">
         <link rel="stylesheet" href="js/jquery.mobile.theme-1.4.3.css" />
         <link rel="stylesheet" href="js/jquery.mobile.structure-1.4.3.css" />
         <link rel="stylesheet" href="js/jquery.mobile.icons.min.css" />
@@ -14,178 +14,228 @@
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/jquery.mobile-1.4.3.min.js"></script>
         <script src="js/jquery-ui-1.10.4.custom.js"></script>
-		<script language="JavaScript">
-		//$(function() {
-		//$( document ).delegate("#pedidos", "pageinit",function() {
-		$( document ).on( "pagebeforeshow","#pedidos", function() {
-			getEmpresas();
-			//$("#pedidos").refresh();
-			/*$(".mySelect").bind( "change", function(event, ui) {
- 				getCategorias();*/
-			//})
-		});
+        <script language="JavaScript">
+        //$(function() {
+        //$( document ).delegate("#pedidos", "pageinit",function() {
+        $( document ).on( "pagecreate","#pedidos", function() {
+            getEmpresas();
+            //$("#pedidos").refresh();
+            /*$(".mySelect").bind( "change", function(event, ui) {
+                getCategorias();*/
+            //})
+        });
 
-		function getEmpresas(){
-		html = "";
-		//var formData = $("#ajaxForm").serialize();
-		var formData = { "option":"empresa","idEmpresa":"0"};
-				$.ajax({
-					type : "GET",
-					url : "controllers/producto.php",
-					data: formData,
-					contentType : "application/json; charset=utf-8",
-					dataType : "json",
-					success : function(msg) {
-		   			   $.each(msg, function(index, item) {
-                    		html += "<li><a href=# onClick = 'javascript:getCategorias("+item.index +",\""+item.value+"\")'>" + item.value + "</a></li>";
-                		});
-                	  $ul = $("#ddlEmpresa2");
-                	  $ul.html("");
-                	  $ul.html( html );
-                	  $ul.listview( "refresh" );
+        function getEmpresas(){
+        html = "";
+        //var formData = $("#ajaxForm").serialize();
+        var formData = { "option":"empresa","idEmpresa":"0"};
+                $.ajax({
+                    type : "GET",
+                    url : "controllers/producto.php",
+                    data: formData,
+                    contentType : "application/json; charset=utf-8",
+                    dataType : "json",
+                    success : function(msg) {
+                       $.each(msg, function(index, item) {
+                            html += "<li><a href=# onClick = 'javascript:getCategorias("+item.index +",\""+item.value+"\")'>" + item.value + "</a></li>";
+                        });
+                      $ul = $("#ddlEmpresa2");
+                      $ul.html("");
+                      $ul.html( html );
+                      $ul.listview( "refresh" );
                       $ul.trigger( "updatelayout");
-					},
-					error : function() {
-						//$("#ddlEmpresa2").get(0).options.length = 0;
-						alert("Error al cargar Empresas");
-					}
-				});
-		}
-		function getCategorias(idEmpresa, nombreEmpresa){
-		var formData = { "option":"categoria","idEmpresa":idEmpresa};
+                    },
+                    error : function() {
+                        //$("#ddlEmpresa2").get(0).options.length = 0;
+                        alert("Error al cargar Empresas");
+                    }
+                });
+        }
+        function getCategorias(idEmpresa, nombreEmpresa){
+        var formData = { "option":"categoria","idEmpresa":idEmpresa};
 
-		$("#ddlEmpresaHeader").collapsible({collapsed:true});
-		$("#ddlEmpresaHeader .ui-btn-b").text(nombreEmpresa);
-		$('#ddlEmpresaHeader').collapsible({refresh: true});
-		$("#ddlCategoriaHeader").collapsible({collapsed:false});
-		$("#ddlCategoriaHeader .ui-btn-b").text("Elija una categoria...");
-		$("#ddlLineaHeader .ui-btn-b").text("Elija una linea...");
-		$("#ddlMarcaHeader .ui-btn-b").text("Elija una marca...");
-		html = "";
-				$.ajax({
-					type : "GET",
-					url : "controllers/producto.php",
-					data : formData,
-					contentType : "application/json; charset=utf-8",
-					dataType : "json",
-					success : function(msg) {
-		   			   $.each(msg, function(index, item) {
-                    		html += "<li><a href=# onClick = 'javascript:getLineas("+item.index +",\""+item.value+"\")'>" + item.value + "</a></li>";
-                		});
-                	  $ul = $("#ddlCategoria");
-                	  $ul.html("");
-                	  $ul.html( html );
-                	  $ul.listview( "refresh" );
+        $("#ddlEmpresaHeader").collapsible({collapsed:true});
+        $("#ddlEmpresaHeader .ui-btn").text(nombreEmpresa);
+        $('#ddlEmpresaHeader').collapsible({refresh: true});
+        $("#ddlCategoriaHeader").collapsible({collapsed:false});
+        $("#ddlCategoriaHeader .ui-btn").text("Elija una categoria...");
+        $("#ddlLineaHeader .ui-btn").text("Elija una linea...");
+        $("#ddlMarcaHeader .ui-btn").text("Elija una marca...");
+        html = "";
+                $.ajax({
+                    type : "GET",
+                    url : "controllers/producto.php",
+                    data : formData,
+                    contentType : "application/json; charset=utf-8",
+                    dataType : "json",
+                    success : function(msg) {
+                       $.each(msg, function(index, item) {
+                            html += "<li><a href=# onClick = 'javascript:getLineas("+item.index +",\""+item.value+"\")'>" + item.value + "</a></li>";
+                        });
+                      $ul = $("#ddlCategoria");
+                      $ul.html("");
+                      $ul.html( html );
+                      $ul.listview( "refresh" );
                       $ul.trigger( "updatelayout");
-					},
-					error : function() {
-						alert("Error al cargar Categoria");
-					}
-				});
-		}
+                    },
+                    error : function() {
+                        alert("Error al cargar Categoria");
+                    }
+                });
+        }
 
-		function getLineas(idCategoria, nombreCategoria){
-		var formData = { "option":"linea","idCategoria":idCategoria};
+        function getLineas(idCategoria, nombreCategoria){
+        var formData = { "option":"linea","idCategoria":idCategoria};
 
-		$("#ddlCategoriaHeader").collapsible({collapsed:true});
-		$("#ddlCategoriaHeader .ui-btn-b").text(nombreCategoria);
-		$('#ddlCategoriaHeader').collapsible({refresh: true});
-		$("#ddlLineaHeader").collapsible({collapsed:false});
-		html = "";
-				$.ajax({
-					type : "GET",
-					url : "controllers/producto.php",
-					data : formData,
-					contentType : "application/json; charset=utf-8",
-					dataType : "json",
-					success : function(msg) {
-		   			   $.each(msg, function(index, item) {
-                    		html += "<li><a href=# onClick = 'javascript:getMarcas("+item.index +",\""+item.value+"\")'>" + item.value + "</a></li>";
-                		});
-                	  $ul = $("#ddlLinea");
-                	  $ul.html("");
-                	  $ul.html( html );
-                	  $ul.listview( "refresh" );
+        $("#ddlCategoriaHeader").collapsible({collapsed:true});
+        $("#ddlCategoriaHeader .ui-btn").text(nombreCategoria);
+        $('#ddlCategoriaHeader').collapsible({refresh: true});
+        $("#ddlLineaHeader").collapsible({collapsed:false});
+        html = "";
+                $.ajax({
+                    type : "GET",
+                    url : "controllers/producto.php",
+                    data : formData,
+                    contentType : "application/json; charset=utf-8",
+                    dataType : "json",
+                    success : function(msg) {
+                       $.each(msg, function(index, item) {
+                            html += "<li><a href=# onClick = 'javascript:getMarcas("+item.index +",\""+item.value+"\")'>" + item.value + "</a></li>";
+                        });
+                      $ul = $("#ddlLinea");
+                      $ul.html("");
+                      $ul.html( html );
+                      $ul.listview( "refresh" );
                       $ul.trigger( "updatelayout");
-					},
-					error : function() {
-						alert("Error al cargar Categoria");
-					}
-				});
-		}
-	function getMarcas(idLinea, nombreLinea){
-		var formData = { "option":"marca","idLinea":idLinea};
+                    },
+                    error : function() {
+                        alert("Error al cargar Categoria");
+                    }
+                });
+        }
+    function getMarcas(idLinea, nombreLinea){
+        var formData = { "option":"marca","idLinea":idLinea};
 
-		$("#ddlLineaHeader").collapsible({collapsed:true});
-		$("#ddlLineaHeader .ui-btn-b").text(nombreLinea);
-		$('#ddlLineaHeader').collapsible({refresh: true});
-		$("#ddlMarcaHeader").collapsible({collapsed:false});
-		html = "";
-				$.ajax({
-					type : "GET",
-					url : "controllers/producto.php",
-					data : formData,
-					contentType : "application/json; charset=utf-8",
-					dataType : "json",
-					success : function(msg) {
-		   			   $.each(msg, function(index, item) {
-                    		html += "<li><a href=# onClick = 'javascript:setMarcas("+item.index +",\""+item.value+"\")'>" + item.value + "</a></li>";
-                		});
-                	  $ul = $("#ddlMarca");
-                	  $ul.html("");
-                	  $ul.html( html );
-                	  $ul.listview( "refresh" );
+        $("#ddlLineaHeader").collapsible({collapsed:true});
+        $("#ddlLineaHeader .ui-btn").text(nombreLinea);
+        $('#ddlLineaHeader').collapsible({refresh: true});
+        $("#ddlMarcaHeader").collapsible({collapsed:false});
+        html = "";
+                $.ajax({
+                    type : "GET",
+                    url : "controllers/producto.php",
+                    data : formData,
+                    contentType : "application/json; charset=utf-8",
+                    dataType : "json",
+                    success : function(msg) {
+                       $.each(msg, function(index, item) {
+                            html += "<li><a href=# onClick = 'javascript:setMarcas("+item.index +",\""+item.value+"\")'>" + item.value + "</a></li>";
+                        });
+                      $ul = $("#ddlMarca");
+                      $ul.html("");
+                      $ul.html( html );
+                      $ul.listview( "refresh" );
                       $ul.trigger( "updatelayout");
-					},
-					error : function() {
-						alert("Error al cargar Categoria");
-					}
-				});
-		}
-		function setMarcas(idMarca,nombreMarca){
-	    $("#ddlMarcaHeader").collapsible({collapsed:true});
-		$("#ddlMarcaHeader .ui-btn-b").text(nombreMarca);
-		$('#ddlMarcaHeader').collapsible({refresh: true});
-		}
-		</script>
-	</head>
-	<body>
+                    },
+                    error : function() {
+                        alert("Error al cargar Categoria");
+                    }
+                });
+        }
+        function setMarcas(idMarca,nombreMarca){
+        $("#ddlMarcaHeader").collapsible({collapsed:true});
+        $("#ddlMarcaHeader .ui-btn").text(nombreMarca);
+        $('#ddlMarcaHeader').collapsible({refresh: true});
+        }
+        </script>
+    </head>
+    <body>
 
-		<div data-role="page" id="pedidos">
+        <div data-role="page" id="pedidos">
 
-			<div data-role="header">
-				<h1>Pedidos</h1>
-			</div><!-- /header -->
+            <div data-role="header">            
+                <div data-role="navbar" data-iconpos="left">
+                    <ul>
+                        <li><a href="index.html" data-icon="home">Inicio</a></li>
+                        <li><a href="#" class="ui-btn-active">Pedidos</a></li>
+                        <li><a href="javascript:history.back();" data-icon="arrow-l">Atras</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /header -->
 
-			<div role="main" class="ui-content">
-				<form id="ajaxForm">
-				<div id="set" data-role="collapsible-set">
-					<div data-role="collapsible" data-theme="b" data-content-theme="b" id="ddlEmpresaHeader" data-collapsed="false">
-						<h2 id="section_title">Elija una empresa...</h2>
-						<ul data-role="listview" data-filter="true" id="ddlEmpresa2"></ul>
-						<input type="hidden" id="option" name="option" value="empresa">
-					</div>
-					<div data-role="collapsible" data-theme="b" data-content-theme="b" id="ddlCategoriaHeader">
-						<h2>Elija una Categoria...</h2>
-						<ul data-role="listview" data-filter="true" id="ddlCategoria"></ul>
-					</div>
-					<div data-role="collapsible" data-theme="b" data-content-theme="b" id="ddlLineaHeader">
-						<h2>Elija una Linea...</h2>
-						<ul data-role="listview" data-filter="true" id="ddlLinea"></ul>
-					</div>
-					<div data-role="collapsible" data-theme="b" data-content-theme="b" id="ddlMarcaHeader">
-						<h2>Elija una Marca...</h2>
-						<ul data-role="listview" data-filter="true" id="ddlMarca"></ul>
-					</div>
-				</div>
-				</form>
+            <div role="main" class="ui-content">
+                <form id="ajaxForm">
+                    <div  class="ui-grid-a ui-responsive">
+                       <div class="ui-block-a">
+                           <div class="ui-field-contain">
+                                  <label for="p-u-venta"> P. de U. de Venta:</label>                                	
+                                  <input name="p-u-venta" id="p-u-venta" placeholder="Text input"  maxlength="50" value="0" type="number">                                                                          </div>                           
+                           <div class="ui-field-contain">
+                              <label for="stock-min">Stock Min.:</label>
+                            <input name="stock-min" id="stock-min" placeholder="Text input" value="0" type="number">                            	
+                              </div>
+                           <div class="ui-field-contain">
+                               <label for="stock-max">Stock Max.:</label>
+                            <input name="stock-max" id="stock-max" placeholder="Text input" value="0" type="number">                            	
+                               </div>
+                        </div>                              
+                        </div>
+                    <div  class="ui-grid-b ui-responsive">
+                      <div class="ui-block-a">
+                             <fieldset data-role="controlgroup" data-type="horizontal">                                
+                                <input name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked" type="radio">
+                                <label for="radio-choice-h-2a">U. de Venta</label>
+                                <input name="radio-choice-h-2" id="radio-choice-h-2b" value="off" type="radio">
+                                <label for="radio-choice-h-2b">U. x Docena</label>
+                                <input name="radio-choice-h-2" id="radio-choice-h-2c" value="other" type="radio">
+                                <label for="radio-choice-h-2c">U. x Caja</label>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <!-- Select Productos-->
+                    <div  class="ui-grid-b ui-responsive">
+                        <div class="ui-block-a">
+                                <div id="set" data-role="collapsible-set">                                        
+                                    <div data-role="collapsible" data-theme="a" data-content-theme="a" id="ddlEmpresaHeader" data-collapsed="false">
+                                        <h2 id="section_title">Elija una empresa...</h2>
+                                        <ul data-role="listview" data-filter="true" id="ddlEmpresa2"></ul>
+                                        <input type="hidden" id="option" name="option" value="empresa">
+                                    </div>
+                                    <div data-role="collapsible" data-theme="a" data-content-theme="a" id="ddlCategoriaHeader">
+                                        <h2>Elija una Categoria...</h2>
+                                        <ul data-role="listview" data-filter="true" id="ddlCategoria"></ul>
+                                    </div>
+                                    <div data-role="collapsible" data-theme="a" data-content-theme="a" id="ddlLineaHeader">
+                                        <h2>Elija una Linea...</h2>
+                                        <ul data-role="listview" data-filter="true" id="ddlLinea"></ul>
+                                    </div>
+                                    <div data-role="collapsible" data-theme="a" data-content-theme="a" id="ddlMarcaHeader">
+                                        <h2>Elija una Marca...</h2>
+                                        <ul data-role="listview" data-filter="true" id="ddlMarca"></ul>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="ui-block-b">
+                        	<img src="js/images/icons-png/alert-black.png" class="ui-li-thumb">
+                        </div>
 
-			</div><!-- /content -->
+                    </div>
+                    <div  class="ui-grid-b ui-responsive">
+                        <div class="ui-block-a">
+                             <fieldset data-role="controlgroup" data-type="horizontal">
+                                <button data-icon="check">Guardar</button>
+                                <button data-icon="delete">Cerrar</button>                                
+                            </fieldset>
+                        </div>
+                    </div>
 
-			<div data-role="footer">
-				<h4>LinkSim</h4>
-			</div><!-- /footer -->
-		</div><!-- /page -->
+                </form>
 
-	</body>
+            </div><!-- /content -->
+        <div data-role="footer">
+                <h4>Copyrigth &copy; LinkSim 2014</h4>
+            </div><!-- /footer -->
+        </div><!-- /page -->
+
+    </body>
 </html>

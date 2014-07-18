@@ -13,41 +13,45 @@
         <script src="js/jquery-ui-1.10.4.custom.js"></script>
     <script>
     	$( document ).on( "pagebeforeshow","#pedidos", function() {
-			getEmpresas();
-
-		});
+			getEmpresas();            
+        });
+		$( document ).on( "pagebeforeshow","#clientes", function() {
+            loadTables();            
+        });
     </script>
     </head>
 
 <body>
 <div data-role="page" id="inicio" >
     <div data-role="header" class="ui-shadow">
-   <h1>LinkSim</h1>
+       <div data-role="header">
+        <div data-role="navbar" data-iconpos="left">
+            <ul>
+                <li><a href="index.html" data-icon="home">Inicio</a></li>
+                <li><a href="#" class="ui-btn-active">LinkSim</a></li>
+                <li><a href="#" >&nbsp;</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
    </div>
-   <div data-role="collapsibleset" data-theme="" data-content-theme="b" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+   <div data-role="collapsibleset" data-theme="" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
     <div data-role="collapsible">
         <h3>Ventas</h3>
-    	<a href="clientes.php" class="ui-btn ui-btn-b ui-icon-user ui-btn-icon-left">Clientes</a>
-    	<a href="pedidos.html" data-prefetch="true" class="ui-btn ui-btn-b ui-icon-shop ui-btn-icon-left">Pedidos</a>
+    	<a href="clientes.html" class="ui-btn ui-icon-user ui-btn-icon-left">Clientes</a>
+    	<a href="pedidos.html" data-prefetch="true" class="ui-btn ui-icon-shop ui-btn-icon-left">Pedidos</a>
     </div>
     <div data-role="collapsible">
         <h3>Compras</h3>
-    	<a href="page.php" class="ui-btn ui-btn-b ui-icon-user ui-btn-icon-left">Proveedores</a>
+    	<a href="proveedores.html" class="ui-btn  ui-icon-user ui-btn-icon-left">Proveedores</a>
     </div>
     <div data-role="collapsible">
         <h3>Inventario</h3>
-    	<a href="page.php" class="ui-btn ui-btn-b ui-shadow ui-icon-shop ui-btn-icon-left">Productos</a>
+    	<a href="inventario.html" class="ui-btn  ui-shadow ui-icon-shop ui-btn-icon-left">Productos</a>
     </div>
 </div>
 <div data-role="footer">
-    <div data-role="navbar" data-iconpos="right">
-        <ul>
-            <li><a href="#" data-icon="grid">Summary</a></li>
-            <li><a href="#" data-icon="star" class="ui-btn-active">Favs</a></li>
-            <li><a href="#" data-icon="gear">Setup</a></li>
-        </ul>
-    </div><!-- /navbar -->
-</div><!-- /footer -->
+                <h4>Copyrigth &copy; LinkSim 2014</h4>
+            </div><!-- /footer -->
 </div>
 </body>
 </html>

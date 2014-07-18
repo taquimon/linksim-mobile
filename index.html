@@ -4,19 +4,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2" />
     <title>LinkSim</title>
     <meta charset="utf-8">
-        <link rel="stylesheet" href="js/jquery.mobile.theme-1.4.3.css" />
-        <link rel="stylesheet" href="js/jquery.mobile.structure-1.4.3.css" />
-        <link rel="stylesheet" href="js/jquery.mobile.icons.min.css" />
-        <link rel="stylesheet" href="css/ui-darkness/jquery-ui-1.10.4.custom.css" />
-        <script src="js/jquery-1.10.2.js"></script>
-        <script src="js/jquery.mobile-1.4.3.min.js"></script>
-        <script src="js/jquery-ui-1.10.4.custom.js"></script>
+      <link rel="stylesheet" href="js/jquery.mobile.theme-1.4.3.css" />
+		<link rel="stylesheet" href="js/jquery.mobile.structure-1.4.3.css" />
+		<link rel="stylesheet" href="js/jquery.mobile.icons.min.css" />
+		<link rel="stylesheet" href="css/demo_table_jui.css" />
+		<link rel="stylesheet" href="css/ui-darkness/jquery-ui-1.10.4.custom.css" />
+		<script src="js/jquery-1.10.2.js"></script>
+		<script src="js/jquery.mobile-1.4.3.min.js"></script>
+		<script src="js/jquery-ui-1.10.4.custom.js"></script>
+		<script src="js/jquery.dataTables.js"></script>
     <script>
-    	$( document ).on( "pagebeforeshow","#pedidos", function() {
-			getEmpresas();            
+    	$( document ).on( "pagebeforeshow","#clientes", function() {
+            loadClientTable();
         });
-		$( document ).on( "pagebeforeshow","#clientes", function() {
-            loadTables();            
+        $( document ).on( "pagebeforeshow","#pedidos", function() {
+			getEmpresas();
+        });
+
+        $( document ).on( "pagebeforeshow","#productos", function() {
+            loadProductTable();
         });
     </script>
     </head>
@@ -37,7 +43,7 @@
    <div data-role="collapsibleset" data-theme="" data-content-theme="a" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
     <div data-role="collapsible">
         <h3>Ventas</h3>
-    	<a href="clientes.html" class="ui-btn ui-icon-user ui-btn-icon-left">Clientes</a>
+    	<a href="clientes.html" class="ui-btn ui-icon-user ui-btn-icon-left" data-prefetch="true">Clientes</a>
     	<a href="pedidos.html" data-prefetch="true" class="ui-btn ui-icon-shop ui-btn-icon-left">Pedidos</a>
     </div>
     <div data-role="collapsible">
@@ -46,7 +52,7 @@
     </div>
     <div data-role="collapsible">
         <h3>Inventario</h3>
-    	<a href="inventario.html" class="ui-btn  ui-shadow ui-icon-shop ui-btn-icon-left">Productos</a>
+    	<a href="productos.html" class="ui-btn  ui-shadow ui-icon-shop ui-btn-icon-left" data-prefetch="true">Productos</a>
     </div>
 </div>
 <div data-role="footer">

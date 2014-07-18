@@ -13,7 +13,7 @@
 		<script src="js/jquery.mobile-1.4.3.min.js"></script>
 		<script src="js/jquery-ui-1.10.4.custom.js"></script>
 		<script src="js/jquery.dataTables.js"></script>
-<script>
+<script language="Javascript">
 	/*$(function() {
 	clientTable = $("#client_table").dataTable({
             "bJQueryUI": true,
@@ -30,14 +30,14 @@
 			]
         });
      });	*/
-	$( document ).on( "pagecreate","#clientes", function() {
-            loadTables();
+	$( document ).on( "pageinit","#clientes", function() {
+           loadClientTable();
             //$("#pedidos").refresh();
             /*$(".mySelect").bind( "change", function(event, ui) {
                 getCategorias();*/
             //})
         });
-	function loadTables(){
+	function loadClientTable(){
 		clientTable = $("#client_table").dataTable({
             "bJQueryUI": true,
             "sPaginationType": "full_numbers",

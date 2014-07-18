@@ -6,21 +6,27 @@ class Producto{
         //$this->getTable();
     }
     function getProductos(){
-        $empresaData = array();
+        $productoData = array();
 		$data = array();
         $con = new Connection();
-        $query = "select * from Productos";
+        $query = "select p.*, i.imagen from inventario i, producto p where p.idProducto=i.idProducto";
         $result  = $con->queryString($query);
         while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-            $Productos =  new stdClass();
-            $Productos->codigo = $row["codigo"];
-            $Productos->nombre = $row["nombre"];
-			$Productos->direccion = $row["direccion"];
-            array_push($empresaData,$Productos);
+            $producto =  new stdClass();
+            $linkProducto = "<a href='pedidos.html?productId={$row["idProducto"]}' data-role='button' class='ui-btn ui-mini ui-corner-all'>{$row['codigo']}</a>";
+            $producto->codigo = $linkProducto;
+            $producto->nombre = $row["nombre"];
+			$producto->descripcion = $row["descripcion"];
+            $imagenLink = "<img src='{$row["imagen"]}' alt='{$row["imagen"]}' width='36px' height='36px'>";
+            $popupLink = "<a href='#popupPhotoLandscape' onClick='javascript:showImage(\"{$row["imagen"]}\");' data-rel='popup' data-position-to='window' class='ui-btn ui-corner-all ui-shadow ui-btn-inline'>{$imagenLink}</a>";
+
+            $producto->imagen = $popupLink;
+            array_push($productoData,$producto);
         }
-		$data ['User'] = $empresaData;
-        return $data;
+		$data ['Product'] = $productoData;
+        echo json_encode($data);
     }
+
     function getEmpresas(){
         $empresaData = array();
 		$data = array();
@@ -140,17 +146,15 @@ class Producto{
     }
 }
 $re = new Producto();
-/*if(isset($_GET['option']))
+if(isset($_GET['option']))
 		{
-			$op = $_GET['option'];
-			echo(json_encode($op));
-			$re = new Producto;
+            $re->callMethods();
 		}
 else{
-	echo "hola";
+	$re->getProductos();
 }
-	*/
-$re->callMethods();
+
+
 
 /*switch ($option) {
 	case 'producto':

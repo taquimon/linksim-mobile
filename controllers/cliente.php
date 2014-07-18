@@ -13,7 +13,7 @@ class Cliente{
         $result  = $con->queryString($query);
         while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
             $clientes =  new stdClass();
-			$linkCliente = "<a href='pedidos.html' data-role='button' class='ui-btn ui-btn-mini ui-corner-all'>{$row['codigo']}</a>";
+			$linkCliente = "<a href='pedidos.html' data-role='button' class='ui-btn ui-mini ui-corner-all'>{$row['codigo']}</a>";
             $clientes->codigo = $linkCliente;
             $clientes->nombre = $row["nombre"];
 			$clientes->direccion = $row["direccion"];
